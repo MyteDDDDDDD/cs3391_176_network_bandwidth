@@ -84,9 +84,9 @@ int main() {
 		
 		int tempu, tempv, tempcap;
 		for (int i = 0; i < c; i++) {
-			cin >> tempu, tempv, tempcap;
-			addEdge(tempu, tempv, tempcap);
-			addEdge(tempv, tempu, tempcap);
+			cin >> tempu>> tempv>> tempcap;
+			addEdge(tempu,tempv, tempcap);
+			addEdge(tempv, tempu,tempcap);
 		}
 		result.push(maxFlow(s,t));
 		cin >> n;
