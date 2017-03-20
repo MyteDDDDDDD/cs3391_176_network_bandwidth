@@ -2,9 +2,10 @@
 #include<queue>
 #include<cmath> 
 #include<limits>
+#include <string.h>
 using namespace std;
 
-const int INF = 1000;
+const int INF = 0x3f3f3f3f;
 int n,s,t,c;
 int totaledge;
 int head[100];
@@ -18,6 +19,7 @@ struct {
 void cleargraph() {
 	totaledge = 0;
 	memset(head, -1, sizeof(head));
+	memset(f, 0, sizeof(f));
 }
 
 void addEdge(int u, int v, int cap) {
@@ -52,7 +54,7 @@ bool bfs(int s, int t) {
 	return d[t]>=0;
 }
 
-int dinic(int s, int t, int sum) {
+int dinic(int s, int t, int sum) { //dinic 
 	if (s == t)
 		return sum;
 	int v, tp = sum;
@@ -61,7 +63,7 @@ int dinic(int s, int t, int sum) {
 		if (d[v] == d[s] + 1 && edge[e].cap > f[e]) {
 			int canflow = dinic(v, t, min(sum, edge[e].cap - f[e]));
 			f[e] += canflow;
-			f[e + 1] -= canflow;
+			f[e ^ 1] -= canflow;
 			sum -= canflow;
 		}
 	}
@@ -95,7 +97,10 @@ int main() {
 	int count = 1;;
 	while (!result.empty()) {
 		cout << "Network " << count << endl;
+		count++;
 		cout<<"The bandwidth is "<<result.front()<<"."<<endl;
+		if (!result.empty())
+			cout << endl;
 		result.pop();
 	}
 
